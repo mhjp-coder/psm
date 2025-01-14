@@ -1,0 +1,32 @@
+services:
+  psm:
+    build: .
+    user: reflex
+    hostname: psm
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+      - "8000:8000"
+    environment:
+      - TZ=${TZ}
+      - PLEXAPI_AUTH_SERVER_TOKEN=${PLEXAPI_AUTH_SERVER_TOKEN}
+      - PLEXAPI_AUTH_SERVER_BASEURL=${PLEXAPI_AUTH_SERVER_BASEURL}
+    volumes:
+      - ./data:/app/data
+      - ./uploaded_files:/app/uploaded_files
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /app
+          ignore:
+            - "**/__pycache__"
+            - "**/*.pyc"
+        - action: rebuild
+          path: pyproject.toml
+    command:
+      [
+        "sh",
+        "-c",
+        "[ -d alembic ] && reflex db migrate; redis-server --daemonize yes && exec reflex run",
+      ]

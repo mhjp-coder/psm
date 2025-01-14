@@ -1,0 +1,17 @@
+.web
+*.py[cod]
+.git
+.env
+.venv/
+.vscode/
+.envrc
+.dockerignore
+.gitignore
+sample.env
+__pycache__/*
+Dockerfile
+compose.yaml
+compose.*.yaml
+data/
+uploaded_files/
+

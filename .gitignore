@@ -1,0 +1,11 @@
+__pycache__/
+assets/external/
+*.db
+*.py[cod]
+.web
+data/config.toml
+.env
+.venv/
+uploaded_files/
+plex_share_manager/utils/test_plex.py
+tmp.py

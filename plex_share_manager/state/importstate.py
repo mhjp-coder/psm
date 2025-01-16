@@ -30,7 +30,7 @@ class ImportState(rx.State):
         self.set_updated_users([])
         self.set_update_sections([])
 
-    @rx.var
+    @rx.var(cache=True)
     def enable_sync_users(self) -> bool:
         """Dont allow sync users if no sections are imported"""
         with rx.session() as session:

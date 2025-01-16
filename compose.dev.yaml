@@ -7,10 +7,9 @@ services:
     ports:
       - "3000:3000"
       - "8000:8000"
-    environment:
-      - TZ=${TZ}
-      - PLEXAPI_AUTH_SERVER_TOKEN=${PLEXAPI_AUTH_SERVER_TOKEN}
-      - PLEXAPI_AUTH_SERVER_BASEURL=${PLEXAPI_AUTH_SERVER_BASEURL}
+    env_file:
+      - path: .env
+        required: false
     volumes:
       - ./data:/app/data
       - ./uploaded_files:/app/uploaded_files

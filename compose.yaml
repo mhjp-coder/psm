@@ -7,12 +7,9 @@ services:
     ports:
       - "3000:3000"
       - "8000:8000"
-    environment:
-      - TZ=${TZ}
-      - FQDN=${FQDN}
-      - PLEXAPI_AUTH_SERVER_TOKEN=${PLEXAPI_AUTH_SERVER_TOKEN}
-      - PLEXAPI_AUTH_SERVER_BASEURL=${PLEXAPI_AUTH_SERVER_BASEURL}
-      - API_URL=${API_URL:-http://localhost:8000}
+    env_file:
+      - path: .env
+        required: false
     volumes:
       - psm-db:/app/data
 

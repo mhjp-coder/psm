@@ -52,5 +52,9 @@ ENV PATH="/app/.venv/bin:$PATH" PYTHONUNBUFFERED=1
 # Needed until Reflex properly passes SIGTERM on backend.
 STOPSIGNAL SIGKILL
 
+# Expose ports
+EXPOSE 3000
+EXPOSE 8000
+
 # Always apply migrations before starting the backend.
 CMD ["sh", "-c", "[ -d alembic ] && reflex db migrate; redis-server --daemonize yes && exec reflex run --env prod"]

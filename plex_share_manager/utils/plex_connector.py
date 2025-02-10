@@ -119,7 +119,7 @@ def update_user_access(users: list[User], delete=False) -> None:
             sections = [section.title for section in user.sections]
             user_email = account.user(user.email)
             if user.status == "expired" or delete is True:
-                account.updateFriend(user_email, plex_server, sections=app_settings["SECTION_EXPIRED"])
+                account.updateFriend(user_email, plex_server, sections=[app_settings["SECTION_EXPIRED"]])
             else:
                 account.updateFriend(user_email, plex_server, sections=sections, allowSync=allow_sync)
     except Exception as e:

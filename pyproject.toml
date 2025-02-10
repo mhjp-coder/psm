@@ -1,11 +1,7 @@
 [project]
-name="plex-share-manager"
-version="0.1.0"
-description="Add your description here"
-readme="README.md"
+name           ="plex-share-manager"
+version        ="0.1.0"
+description    ="Add your description here"
+readme         ="README.md"
 requires-python=">=3.12"
-dependencies=[
-    "plexapi>=4.16.0",
-    "reflex>=0.6.7",
-    "tomli-w>=1.1.0",
-]
+dependencies   =[ "plexapi>=4.16.0", "reflex>=0.6.8", "tomli-w>=1.1.0" ]

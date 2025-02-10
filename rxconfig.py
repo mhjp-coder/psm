@@ -43,9 +43,9 @@ load_settings_toml()
 config = rx.Config(
     app_name="plex_share_manager",
     db_url="sqlite:///data/reflex.db",
-    api_url="https://localhost:8000",
-    # state_manager_mode="redis",
-    # redis_url="redis://localhost",
+    api_url="http://localhost:8000",
+    state_manager_mode="redis",
+    redis_url="redis://localhost",
 )
 
 

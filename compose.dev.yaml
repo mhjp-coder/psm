@@ -3,7 +3,7 @@ services:
     build: .
     user: reflex
     hostname: psm
-    restart: unless-stopped
+    restart: no
     ports:
       - "3000:3000"
       - "8000:8000"

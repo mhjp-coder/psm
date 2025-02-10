@@ -12,6 +12,7 @@ __pycache__/*
 Dockerfile
 compose.yaml
 compose.*.yaml
-data/
+data/*.toml
+data/*.db
 uploaded_files/
 

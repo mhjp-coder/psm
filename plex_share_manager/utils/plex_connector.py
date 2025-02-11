@@ -20,8 +20,6 @@ _plex_server = None  # Cache connection
 def _connect_plex_server() -> PlexServer:
     """Connect to Plex server with caching."""
     global _plex_server
-    config_state.load_settings_toml()
-    print(config_state.app_settings)
     try:
         if _plex_server is None:
             _plex_server = PlexServer(

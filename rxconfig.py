@@ -20,25 +20,27 @@ if not config_file.exists():
     shutil.copy2(default_config_file, config_file)
 
 
-app_settings = {}
+class ConfigState:
+    config_file: Path = Path(__file__).parent / "data/config.toml"
+    app_settings: dict = {}
+
+    def load_settings_toml(self) -> None:
+        """Load the settings from the environment variables."""
+        with open(self.config_file, "rb") as f:
+            settings = toml.load(f)
+
+        if os.getenv("PLEXAPI_AUTH_SERVER_TOKEN"):
+            settings["PLEXAPI_AUTH_SERVER_TOKEN"] = os.getenv("PLEXAPI_AUTH_SERVER_TOKEN")
+
+        if os.getenv("PLEXAPI_AUTH_SERVER_BASEURL"):
+            settings["PLEXAPI_AUTH_SERVER_BASEURL"] = os.getenv("PLEXAPI_AUTH_SERVER_BASEURL")
+
+        self.app_settings = settings
 
 
-def load_settings_toml() -> None:
-    """Load the settings from the environment variables."""
-    with open(config_file, "rb") as f:
-        settings = toml.load(f)
-
-    if os.getenv("PLEXAPI_AUTH_SERVER_TOKEN"):
-        settings["PLEXAPI_AUTH_SERVER_TOKEN"] = os.getenv("PLEXAPI_AUTH_SERVER_TOKEN")
-
-    if os.getenv("PLEXAPI_AUTH_SERVER_BASEURL"):
-        settings["PLEXAPI_AUTH_SERVER_BASEURL"] = os.getenv("PLEXAPI_AUTH_SERVER_BASEURL")
-
-    global app_settings
-    app_settings = settings
-
-
-load_settings_toml()
+# Create and use the state instance
+config_state = ConfigState()
+config_state.load_settings_toml()
 
 config = rx.Config(
     app_name="plex_share_manager",
@@ -50,7 +52,7 @@ config = rx.Config(
 
 
 logging.basicConfig(
-    level=getattr(logging, app_settings["LOG_LEVEL"]),
+    level=getattr(logging, config_state.app_settings["LOG_LEVEL"]),
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger("psm_logger")

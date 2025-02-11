@@ -2,7 +2,7 @@
 from ..models import User
 from ..utils import plex_connector
 from ..utils import utils
-from rxconfig import logger, app_settings
+from rxconfig import logger, config_state
 
 # stdlib
 import asyncio
@@ -16,9 +16,9 @@ async def daily_tasks() -> None:
     logger.info("Starting daily tasks")
     try:
         while True:
-            if app_settings["ENABLE_UPDATE_STATUS_TASK"]:
+            if config_state.app_settings["ENABLE_UPDATE_STATUS_TASK"]:
                 update_user_status()
-            if app_settings["ENABLE_DISABLE_EXPIRED_USERS_TASK"]:
+            if config_state.app_settings["ENABLE_DISABLE_EXPIRED_USERS_TASK"]:
                 disable_expired_users()
             await asyncio.sleep(86400)
     except Exception as e:

@@ -6,7 +6,7 @@ from .ui import base_theme
 from .pages import dashboard, settings, SettingState
 from .navigation import routes
 from .tasks import daily_tasks
-from rxconfig import app_settings
+from rxconfig import config_state
 
 
 # stdlib
@@ -38,5 +38,5 @@ app.add_page(
     route=routes.DASHBOARD_ROUTE,
 )
 
-if app_settings["ENABLE_ALL_TASKS"] is True:
+if config_state.app_settings["ENABLE_ALL_TASKS"] is True:
     app.register_lifespan_task(daily_tasks)

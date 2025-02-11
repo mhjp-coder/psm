@@ -3,7 +3,7 @@
 # Local modules
 from ..models import User, Section
 from ..utils import utils
-from rxconfig import app_settings, logger
+from rxconfig import config_state, logger
 
 # stdlib
 
@@ -13,18 +13,20 @@ from sqlmodel import select
 from plexapi.myplex import PlexServer
 
 # Constants
-allow_sync = 1 if app_settings["ALLOW_SYNC"] else 0
+allow_sync = 1 if config_state.app_settings["ALLOW_SYNC"] else 0
 _plex_server = None  # Cache connection
 
 
 def _connect_plex_server() -> PlexServer:
     """Connect to Plex server with caching."""
     global _plex_server
+    config_state.load_settings_toml()
+    print(config_state.app_settings)
     try:
         if _plex_server is None:
             _plex_server = PlexServer(
-                baseurl=app_settings["PLEXAPI_AUTH_SERVER_BASEURL"],
-                token=app_settings["PLEXAPI_AUTH_SERVER_TOKEN"],
+                baseurl=config_state.app_settings["PLEXAPI_AUTH_SERVER_BASEURL"],
+                token=config_state.app_settings["PLEXAPI_AUTH_SERVER_TOKEN"],
             )
     except Exception as e:
         logger.error(f"Failed to connect to Plex server: {e}")
@@ -119,7 +121,7 @@ def update_user_access(users: list[User], delete=False) -> None:
             sections = [section.title for section in user.sections]
             user_email = account.user(user.email)
             if user.status == "expired" or delete is True:
-                account.updateFriend(user_email, plex_server, sections=[app_settings["SECTION_EXPIRED"]])
+                account.updateFriend(user_email, plex_server, sections=[config_state.app_settings["SECTION_EXPIRED"]])
             else:
                 account.updateFriend(user_email, plex_server, sections=sections, allowSync=allow_sync)
     except Exception as e:

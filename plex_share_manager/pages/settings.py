@@ -3,7 +3,7 @@
 # Local modules
 from ..ui import base_page
 from ..models import Section
-from rxconfig import logger, load_settings_toml, config_file
+from rxconfig import logger, config_state, config_file
 
 # stdlib
 
@@ -60,7 +60,7 @@ class SettingState(rx.State):
         self._config["PLEXAPI_AUTH_SERVER_TOKEN"] = value
         with open(config_file, "wb") as f:
             toml_w.dump(self._config, f)
-        load_settings_toml()
+        config_state.load_settings_toml()
 
     @rx.event
     def change_plexbaseurl(self, value) -> None:
@@ -70,7 +70,7 @@ class SettingState(rx.State):
         self._config["PLEXAPI_AUTH_SERVER_BASEURL"] = value
         with open(config_file, "wb") as f:
             toml_w.dump(self._config, f)
-        load_settings_toml()
+        config_state.load_settings_toml()
 
     @rx.event
     def check_choice(self, value, index) -> None:
@@ -85,7 +85,7 @@ class SettingState(rx.State):
         self._config["SECTION_EXPIRED"] = index
         with open(config_file, "wb") as f:
             toml_w.dump(self._config, f)
-        load_settings_toml()
+        config_state.load_settings_toml()
 
     @rx.event
     def change_expiry_days(self, value) -> None:
@@ -95,7 +95,7 @@ class SettingState(rx.State):
         self._config["DEFAULT_EXPIRY_DAYS"] = int(value)
         with open(config_file, "wb") as f:
             toml_w.dump(self._config, f)
-        load_settings_toml()
+        config_state.load_settings_toml()
 
     @rx.event
     def change_enable_all_tasks(self, value) -> None:
@@ -105,7 +105,7 @@ class SettingState(rx.State):
         self._config["ENABLE_ALL_TASKS"] = value
         with open(config_file, "wb") as f:
             toml_w.dump(self._config, f)
-        load_settings_toml()
+        config_state.load_settings_toml()
 
     @rx.event
     def change_enable_update_status_task(self, value) -> None:
@@ -115,7 +115,7 @@ class SettingState(rx.State):
         self._config["ENABLE_UPDATE_STATUS_TASK"] = value
         with open(config_file, "wb") as f:
             toml_w.dump(self._config, f)
-        load_settings_toml()
+        config_state.load_settings_toml()
 
     @rx.event
     def change_enable_disable_expired_users_task(self, value) -> None:
@@ -125,7 +125,7 @@ class SettingState(rx.State):
         self._config["ENABLE_DISABLE_EXPIRED_USERS_TASK"] = value
         with open(config_file, "wb") as f:
             toml_w.dump(self._config, f)
-        load_settings_toml()
+        config_state.load_settings_toml()
 
     @rx.event
     def change_log_level(self, value) -> None:
@@ -136,7 +136,7 @@ class SettingState(rx.State):
         with open(config_file, "wb") as f:
             toml_w.dump(self._config, f)
         logger.setLevel(value)
-        load_settings_toml()
+        config_state.load_settings_toml()
 
     @rx.event
     def change_allow_sync(self, value) -> None:
@@ -146,7 +146,7 @@ class SettingState(rx.State):
         self._config["ALLOW_SYNC"] = value
         with open(config_file, "wb") as f:
             toml_w.dump(self._config, f)
-        load_settings_toml()
+        config_state.load_settings_toml()
 
 
 def settings() -> rx.Component:

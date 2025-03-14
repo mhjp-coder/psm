@@ -269,7 +269,7 @@ def settings() -> rx.Component:
                         rx.heading("Disable Expired Users Task", _as="h1"),
                         rx.text(
                             """Turn on to enable the update status task to run daily.
-                            This task updates the status of the users in the database based on the expiry date."""
+                            This task updates the users in plex."""
                         ),
                         max_width="30%",
                     ),

@@ -144,4 +144,5 @@ def update_user_data(user: User) -> User:
     setattr(existing_user, "email", user.email)
     setattr(existing_user, "plex_id", user.plex_id)
     setattr(existing_user, "avatar_url", user.avatar_url)
+    setattr(existing_user, "invite_pending", user.invite_pending)
     return existing_user

@@ -40,7 +40,8 @@ def get_plex_users() -> list[User]:
     try:
         plex_server = _connect_plex_server()
         plex_users = plex_server.myPlexAccount().users()
-        pending_invites = plex_server.myPlexAccount().pendingInvites(includeReceived=False)
+        # Fetch pending invites broken at the moment
+        # pending_invites = plex_server.myPlexAccount().pendingInvites(includeReceived=False)
 
     except Exception as e:
         logger.error(f"Failed to fetch Plex users: {e}")
@@ -65,18 +66,18 @@ def get_plex_users() -> list[User]:
             )
             users.append(new_user)
 
-        for plex_user in pending_invites:
-            pending_user = User(
-                plex_id=None,
-                username=None,
-                email=plex_user.email,
-                expiry_date=expiry_date,
-                status=status,
-                avatar_url=None,
-                sections=[],
-                invite_pending=True,
-            )
-            users.append(pending_user)
+        # for plex_user in pending_invites:
+        #     pending_user = User(
+        #         plex_id=None,
+        #         username=None,
+        #         email=plex_user.email,
+        #         expiry_date=expiry_date,
+        #         status=status,
+        #         avatar_url=None,
+        #         sections=[],
+        #         invite_pending=True,
+        #     )
+        #     users.append(pending_user)
 
     except Exception as e:
         logger.error(f"Error processing user {plex_user.email}: {e}")
